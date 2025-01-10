@@ -22,6 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { FileUpload } from "./FileUpload"
+import { api } from "@/lib/axios"
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -53,10 +54,13 @@ export function UploadNoteForm() {
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const res = await api.post("/upload", values);
+      console.log(res);
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -71,9 +75,7 @@ export function UploadNoteForm() {
               <FormControl>
                 <Input placeholder="Enter title" {...field} />
               </FormControl>
-              <FormDescription>
-                This is the title of your subject.
-              </FormDescription>
+
               <FormMessage />
             </FormItem>
           )}
@@ -93,13 +95,10 @@ export function UploadNoteForm() {
                 <SelectContent>
                   <SelectItem value="math">Math</SelectItem>
                   <SelectItem value="science">Science</SelectItem>
-                  <SelectItem value="history">History</SelectItem>
-                  <SelectItem value="literature">Literature</SelectItem>
+                  <SelectItem value="history">English</SelectItem>
                 </SelectContent>
               </Select>
-              <FormDescription>
-                Select the subject for this content.
-              </FormDescription>
+
               <FormMessage />
             </FormItem>
           )}
@@ -125,9 +124,7 @@ export function UploadNoteForm() {
                   <SelectItem value="P6">P6</SelectItem>
                 </SelectContent>
               </Select>
-              <FormDescription>
-                Choose the level of the content.
-              </FormDescription>
+
               <FormMessage />
             </FormItem>
           )}

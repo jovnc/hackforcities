@@ -16,18 +16,21 @@ def upload_file():
         # Handle CORS preflight request (return 200 OK with necessary headers)
         return "", 200
     
-    if 'file' not in request.files:
-        return {"message": "No file part"}, 400
+    # if 'file' not in request.files:
+    #     return {"message": "No file part"}, 400
+    # print(request.files['file'])
+    print(request.data)
+    title="test"
 
-    file = request.files['file']
+    # file = request.files['file']
 
-    if file.filename == '':
-        return {"message": "No selected file"}, 400
+    # if file.filename == '':
+    #     return {"message": "No selected file"}, 400
 
-    filename = secure_filename(file.filename)
-    file.save(f"./uploads/{filename}")
+    # filename = secure_filename(file.filename)
+    # file.save(f"./uploads/{filename}")
 
-    return {"message": f"File {filename} uploaded successfully"}, 200
+    return {"message": f"File {title} uploaded successfully"}, 200
 
 
 if __name__ == '__main__':
