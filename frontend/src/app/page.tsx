@@ -20,7 +20,7 @@ export default function Home() {
         </div>
         <div className="px-32 py-16 xs:p-16 md:p-16 xl:p-32 w-full">
           <Image
-            src="/tes-logo.png"
+            src="/logo.png"
             alt="WorksheetGen Logo"
             width={400}
             height={400}
