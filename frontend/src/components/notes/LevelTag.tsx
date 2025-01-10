@@ -13,7 +13,7 @@ const levelToColor: Record<Level, string> = {
   const LevelTag = ({ level }: { level: Level }) => {
     const bgColor = levelToColor[level] || 'bg-gray-300'; // Fallback color if level is not found
     return (
-      <p className={`${bgColor} rounded-3xl w-fit px-3`}>
+      <p className={`${bgColor} rounded-3xl w-fit px-3 transition-transform transform hover:scale-110`}>
         {level}
       </p>
     );

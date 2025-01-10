@@ -56,7 +56,7 @@ export default function NotesFilter({ notes }: { notes: NoteCardProps[] }) {
             onValueChange={handleLevelFilterChange}
             defaultValue={levels.map((level) => level.value)}
             placeholder="Select levels"
-            variant="lightPurple"
+            variant="lightGray"
             maxCount={6}
             className="basic-multi-select w-full"
           />
@@ -69,7 +69,7 @@ export default function NotesFilter({ notes }: { notes: NoteCardProps[] }) {
             onValueChange={handleSubjectFilterChange}
             defaultValue={subjects.map((subject) => subject.value)}
             placeholder="Select subjects"
-            variant="lightPurple"
+            variant="lightGray"
             maxCount={4}
             className="basic-multi-select min-w-xl"
           />

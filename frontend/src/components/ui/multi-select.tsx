@@ -45,8 +45,8 @@ const multiSelectVariants = cva(
         destructive:
           "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
         inverted: "inverted",
-        lightPurple:
-          "bg-purple-400 text-white font-light hover:text-accent-foreground shadow-sm hover:bg-purple-500 hover:text-white",
+        lightGray:
+          "bg-gray-200 text-gray-800 font-light hover:text-accent-foreground shadow-sm hover:bg-gray-300 hover:text-black",
       },
     },
     defaultVariants: {

@@ -10,7 +10,7 @@ const subjectToColor: Record<Subject, string> = {
 const SubjectTag = ({ subject }: { subject: Subject}) => {
     const bgColor = subjectToColor[subject] || 'bg-gray-300'; // Fallback color if level is not found
     return (
-      <p className={`${bgColor} rounded-3xl w-fit px-3`}>
+      <p className={`${bgColor} rounded-3xl w-fit px-3 transition-transform transform hover:scale-110`}>
         {subject}
       </p>
     );
