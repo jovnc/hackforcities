@@ -1,50 +1,36 @@
-import os
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from werkzeug.utils import secure_filename
+from helpers.preprocessing import load_vectorstore, vectorstore_ingest
+from helpers.prompts import question_prompt
+from langchain.chains import RetrievalQA
+from langchain_openai import ChatOpenAI
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True, resources={r"/api/*": {"origins": "*"}})  # Enable CORS for all routes
+CORS(app, supports_credentials=True, resources={r"/api/*": {"origins": "*"}})
 
 @app.route('/api/hello', methods=['GET'])
 def hello():
     return jsonify({'message': 'Hello from Flask backend!'})
 
-@app.route('/api/upload', methods=['POST', 'OPTIONS'])
+@app.route('/api/upload', methods=['POST'])
 def upload_file():
-    if request.method == "OPTIONS":
-        # Handle CORS preflight request (return 200 OK with necessary headers)
-        return "", 200
     
-    # if 'file' not in request.files:
-    #     return {"message": "No file part"}, 400
-    # print(request.files['file'])
-    print(request.data)
-    title="test"
+    # store file in embeddings (qdrant)
 
-    # file = request.files['file']
+    return jsonify({"message": f"File uploaded successfully"}), 200
 
-    # if file.filename == '':
-    #     return {"message": "No selected file"}, 400
-
-    # filename = secure_filename(file.filename)
-    # file.save(f"./uploads/{filename}")
-
-    return {"message": f"File {title} uploaded successfully"}, 200
-
-def process_pdf(file_path):
-    # Load PDF
-    loader = PyPDFLoader(file_path)
-    documents = loader.load()
-
-    # Split the document text into smaller chunks
-    text_splitter = CharacterTextSplitter(chunk_size=512, chunk_overlap=50)
-    chunks = text_splitter.split_documents(documents)
-
-    # Create embeddings for the chunks
-    vectorstore = Chroma.from_documents(chunks, embedding_model, persist_directory="./recordb")
-
-    return vectorstore
+@app.route("/chat", methods=["POST"])
+def chat_with_pdf():
+    try:
+        retriever = load_vectorstore("sss", "sss")
+        llm = ChatOpenAI(model="gpt-4o")
+        # system_prompt = question_prompt()
+        qa_chain = RetrievalQA.from_chain_type(
+            llm=ChatOpenAI("gpt-4o"),  # Use any supported LLM
+            retriever=retriever,
+        )
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
