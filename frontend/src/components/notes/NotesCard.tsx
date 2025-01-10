@@ -13,7 +13,7 @@ export function NoteCard({ id, title, level, subject, link }: NoteCardProps) {
       <SubjectTag subject={subject}/>
       </div>
       <div className="mt-4">
-        <Button variant="outline" className="mr-2 border-black dark:border-white text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800">
+        <Button variant="outline" asChild>
           <Link href={`/notes/${id}`}>View</Link>
         </Button>
     
