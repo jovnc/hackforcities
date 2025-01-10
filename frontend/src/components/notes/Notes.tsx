@@ -15,7 +15,7 @@ import { NoteCard } from "./NotesCard";
  const Notes = ({notes} : {notes: NoteCardProps[]}) => {
 
   return (
-    <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {notes && notes.map((note) => (
           <NoteCard key={note.id} {...note} />
         ))}

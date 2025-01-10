@@ -1,5 +1,6 @@
 import { getNoteById } from "@/actions/notes";
 import { Button } from "@/components/ui/button";
+import { NoteCardProps } from "@/types/notes";
 import Link from "next/link";
 
 export default async function NotePage({ params }: { params: { id: string } }) {
