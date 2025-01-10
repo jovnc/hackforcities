@@ -1,10 +1,10 @@
-import React from 'react'
+"use client"
+import React, {useState} from 'react'
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -12,8 +12,9 @@ import {
 import { UploadNoteForm } from './UploadNoteForm'
 
 export default function UploadNoteButton() {
+  const [open, setOpen] = useState(false);
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="outline">Upload Notes</Button>
       </DialogTrigger>
@@ -25,7 +26,7 @@ export default function UploadNoteButton() {
           </DialogDescription>
         </DialogHeader>
 
-        <UploadNoteForm />
+        <UploadNoteForm setOpen={setOpen}/>
       </DialogContent>
     </Dialog>
   )

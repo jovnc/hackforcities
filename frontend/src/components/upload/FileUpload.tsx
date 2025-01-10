@@ -4,6 +4,7 @@ import { FormControl, FormDescription, FormItem, FormLabel, FormMessage } from '
 import { cn } from '@/lib/utils'
 import { FileIcon } from 'lucide-react'
 
+
 interface FileUploadProps {
   onChange: (file: File | null) => void
   value: File | null
@@ -26,7 +27,7 @@ export function FileUpload({ onChange, value, accept }: FileUploadProps) {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: { [accept]: ['.pdf'] },
-    maxFiles: 1
+    maxFiles: 1,
   })
 
   return (

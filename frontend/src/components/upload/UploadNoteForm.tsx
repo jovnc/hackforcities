@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -22,7 +21,8 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { FileUpload } from "./FileUpload"
-import { api } from "@/lib/axios"
+import { uploadFileToUT } from "@/actions/upload"
+import { toast } from "sonner"
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -46,7 +46,7 @@ const formSchema = z.object({
     }),
 })
 
-export function UploadNoteForm() {
+export function UploadNoteForm({setOpen}: {setOpen: (open: boolean) => void}) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -54,12 +54,25 @@ export function UploadNoteForm() {
     },
   })
 
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const res = await api.post("/upload", values);
-      console.log(res);
+      const {fileUrl, fileName, success } = await uploadFileToUT(values.file);
+
+      if (!success) {
+        toast("Failed to upload file");
+        return;
+      } 
+
+      // store url and other details in database
+
+      // preprocess pdf contents, creating embeddings, and store in vector database
+
+      toast("File uploaded successfully");
+      form.reset();
+      setOpen(false);;
     } catch (error) {
-      console.log(error)
+      console.log("ERROR", error)
     }
   }
 
@@ -140,7 +153,8 @@ export function UploadNoteForm() {
             />
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit" >
+          Submit</Button>
       </form>
     </Form>
   )
