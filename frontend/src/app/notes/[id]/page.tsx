@@ -2,8 +2,9 @@ import { getNoteById } from "@/actions/notes";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-export default async function NotePage({ params }: { params: { id: string } }) {
-  const note = await getNoteById(params.id);
+export default async function NotePage({ params }: {params: Promise<{id: string}>}) {
+  const id = (await params).id as string;
+  const note = await getNoteById(id);
 
   if (!note) {
     return <div className="min-h-screen bg-white dark:bg-gray-900 p-8 text-black dark:text-white">Note not found</div>;
