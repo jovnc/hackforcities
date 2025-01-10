@@ -21,7 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { FileUpload } from "./FileUpload"
-import { uploadFileToUT } from "@/actions/upload"
+import { addFilesToDB, uploadFileToUT } from "@/actions/upload"
 import { toast } from "sonner"
 
 const formSchema = z.object({
@@ -65,6 +65,12 @@ export function UploadNoteForm({setOpen}: {setOpen: (open: boolean) => void}) {
       } 
 
       // store url and other details in database
+      const data = await addFilesToDB({
+        fileUrl: fileUrl as string,
+        title: values.title,
+        subject: values.subject,
+        level: values.level,
+      });
 
       // preprocess pdf contents, creating embeddings, and store in vector database
 

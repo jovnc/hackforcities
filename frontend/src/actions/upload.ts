@@ -1,5 +1,6 @@
 "use server";
 
+import db from "@/lib/prisma";
 import { UTApi } from "uploadthing/server";
 
 const utapi = new UTApi({
@@ -16,5 +17,22 @@ export async function uploadFileToUT(file: File) {
         return { fileUrl, fileName, success: true };
     } catch (error) {
         throw new Error("Error uploading file");
+    }
+}
+
+export async function addFilesToDB({ fileUrl, title, subject, level }: { fileUrl: string, title: string, subject: string, level: string }) {
+    try {
+        const res = await db.notes.create({
+            data: {
+                link: fileUrl,
+                title,
+                subject,
+                level,
+            }
+        });
+        console.log(res);
+        return { id: res.id, success: true };
+    } catch (error) {
+        throw new Error("Error adding file to database");
     }
 }
