@@ -6,7 +6,7 @@ import SubjectTag from "./SubjectTag";
 
 export function NoteCard({ id, title, level, subject, link }: NoteCardProps) {
   return (
-    <div className="border border-gray-300 dark:border-gray-700 p-4 rounded-lg">
+    <div className="border border-gray-300 dark:border-gray-700 border-l-4 border-l-gray-300 border-b-4 border-b-gray-300 p-4 rounded-lg transition-transform transform hover:scale-105">
       <h2 className="text-xl font-semibold mb-2 text-black dark:text-white">{title}</h2>
       <div className="flex gap-x-2">
       <LevelTag level={level} />
