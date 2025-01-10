@@ -1,7 +1,6 @@
 import { getNotes } from "@/components/notes/Notes";
-import { NoteCardProps } from "@/components/notes/NotesCard";
-import PdfViewer from "@/components/notes/PdfViewer";
 import { Button } from "@/components/ui/button";
+import { NoteCardProps } from "@/types/notes";
 import Link from "next/link";
 
 
