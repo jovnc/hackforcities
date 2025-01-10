@@ -3,6 +3,7 @@ import Image from "next/image";
 import { auth } from "@/auth";
 import { LoginModal } from "../auth/LoginModal";
 import LogoutButton from "../auth/LogoutButton";
+import { DarkModeToggle } from "../dark-mode/DarkModeToggle";
 
 const navItems = [
   { href: "/", label: "Home" },
@@ -16,7 +17,7 @@ export async function Navbar({}) {
   const session = await auth();
 
   return (
-    <nav className="w-full bg-primary-foreground shadow-md">
+    <nav className="w-full">
       <div className="px-10 sm:px-8 lg:px-10">
         <div className="flex h-16 justify-between">
           <div className="flex flex-shrink-0 items-center">
@@ -25,6 +26,7 @@ export async function Navbar({}) {
             </Link>
           </div>
           <div className="flex flex-row items-center space-x-4">
+            <DarkModeToggle />
             {!session?.user && <LoginModal />}
             {session?.user && <LogoutButton />}
             {/* Desktop menu */}
