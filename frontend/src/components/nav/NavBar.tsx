@@ -4,6 +4,7 @@ import { auth } from "@/auth";
 import { LoginModal } from "../auth/LoginModal";
 import LogoutButton from "../auth/LogoutButton";
 import { DarkModeToggle } from "../dark-mode/DarkModeToggle";
+import { ProfileMenu } from "./ProfileMenu";
 
 const navItems = [
   { href: "/", label: "Home" },
@@ -28,10 +29,7 @@ export async function Navbar({}) {
           <div className="flex flex-row items-center space-x-4">
             <DarkModeToggle />
             {!session?.user && <LoginModal />}
-            {session?.user && <LogoutButton />}
-            {/* Desktop menu */}
-
-            {/* Mobile menu button */}
+            {session?.user && <ProfileMenu username={session?.user?.name as string} avatarUrl={session?.user?.image as string}/>}
           </div>
         </div>
       </div>
