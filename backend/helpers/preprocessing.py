@@ -4,8 +4,6 @@ from langchain.docstore.document import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Qdrant
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
-from langchain.chains import create_retrieval_chain
-from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.prompts import ChatPromptTemplate
 
 from qdrant_client import QdrantClient
@@ -81,7 +79,21 @@ def answer_query(collection_name, query):
     llm = ChatOpenAI(model="gpt-4o") 
     
     system_prompt = custom_prompt(vectorstore, query)
-    res = llm.invoke(system_prompt)
+    prompt = ChatPromptTemplate.from_messages(
+        [
+            (
+                "system",
+                system_prompt,
+            ),
+            ("human", "{input}"),
+        ]
+    )
+    chain = prompt | llm
+
+
+    res = chain.invoke({
+        "input": query,
+    })
     msg = res.content
 
     return msg
