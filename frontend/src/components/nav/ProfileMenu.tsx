@@ -15,9 +15,10 @@ import { Separator } from "../ui/separator";
 interface ProfileMenuProps {
   username: string;
   avatarUrl: string;
+  role: string;
 }
 
-export function ProfileMenu({ username, avatarUrl }: ProfileMenuProps) {
+export function ProfileMenu({ username, avatarUrl, role }: ProfileMenuProps) {
   const [isOpen, setIsOpen] = React.useState(false);
   const [hydrated, setHydrated] = React.useState(false);
 
@@ -36,7 +37,7 @@ export function ProfileMenu({ username, avatarUrl }: ProfileMenuProps) {
         </Avatar>
         <div className="flex flex-col items-start">
           <span className="text-xs font-medium">{username}</span>
-        <span className="text-xs">Teacher</span>
+        <span className="text-2xs">{role}</span>
         </div>
         {isOpen ? (
           <ChevronUp className="h-4 w-4 opacity-50" />

@@ -4,6 +4,7 @@ import { auth } from "@/auth";
 import { LoginModal } from "../auth/LoginModal";
 import { ProfileMenu } from "./ProfileMenu";
 import NavLinks from "./NavLinks";
+import { getRoleByUserId } from "@/actions/user";
 
 const navItems = [
   { href: "/", label: "Home" },
@@ -12,6 +13,7 @@ const navItems = [
 
 export async function Navbar({}) {
   const session = await auth();
+  const role = await getRoleByUserId(session?.user?.id as string) as string;
 
   return (
     <nav className="w-full">
@@ -25,7 +27,7 @@ export async function Navbar({}) {
           <div className="flex flex-row items-center space-x-4">
             <NavLinks navItems={navItems} />
             {!session?.user && <LoginModal />}
-            {session?.user && <ProfileMenu username={session?.user?.name as string} avatarUrl={session?.user?.image as string}/>}
+            {session?.user && <ProfileMenu username={session?.user?.name as string} avatarUrl={session?.user?.image as string} role={role}/>}
           </div>
         </div>
       </div>
