@@ -1,8 +1,9 @@
 export interface NoteCardProps {
-    id: number;
-    name: string;
+    id: string;
+    title: string;
     level: string;
     subject: string;
     link: string;
+    createdAt: Date;
   }
   

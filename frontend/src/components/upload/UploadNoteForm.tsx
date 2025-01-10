@@ -23,6 +23,7 @@ import {
 import { FileUpload } from "./FileUpload"
 import { addFilesToDB, uploadFileToUT } from "@/actions/upload"
 import { toast } from "sonner"
+import { api } from "@/lib/axios"
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -57,28 +58,38 @@ export function UploadNoteForm({setOpen}: {setOpen: (open: boolean) => void}) {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const {fileUrl, fileName, success } = await uploadFileToUT(values.file);
+      const {fileUrl, fileName, success: uploadSuccess } = await uploadFileToUT(values.file);
 
-      if (!success) {
+      if (!uploadSuccess) {
         toast("Failed to upload file");
         return;
       } 
 
       // store url and other details in database
-      const data = await addFilesToDB({
+      const {id, success: dbSuccess} = await addFilesToDB({
         fileUrl: fileUrl as string,
         title: values.title,
         subject: values.subject,
         level: values.level,
       });
 
+      if (!dbSuccess) {
+        toast("Failed to add file to database");
+        return;
+      } 
+
       // preprocess pdf contents, creating embeddings, and store in vector database
+      const res = await api.post("/upload", {
+        id: id,
+        fileUrl: fileUrl
+      });
 
       toast("File uploaded successfully");
       form.reset();
       setOpen(false);;
-    } catch (error) {
+    } catch (error : any) {
       console.log("ERROR", error)
+      toast(`Failed to upload file, please try again. Error: ${error.message}`);
     }
   }
 
@@ -112,9 +123,9 @@ export function UploadNoteForm({setOpen}: {setOpen: (open: boolean) => void}) {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="math">Math</SelectItem>
-                  <SelectItem value="science">Science</SelectItem>
-                  <SelectItem value="history">English</SelectItem>
+                  <SelectItem value="Math">Math</SelectItem>
+                  <SelectItem value="Science">Science</SelectItem>
+                  <SelectItem value="English">English</SelectItem>
                 </SelectContent>
               </Select>
 

@@ -80,10 +80,10 @@ model Authenticator {
 }
 
 model Notes {
-  id            String          @id @default(cuid())
-  createdAt   DateTime @default(now())
-  name  String
-  level String
-  subject String
-  link String
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  title     String
+  level     String
+  subject   String
+  link      String
 }

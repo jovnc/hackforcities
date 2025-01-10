@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { MultiSelect } from "../ui/multi-select";
-import Notes, { getNotes } from "./Notes";
+import Notes from "./Notes";
 import { NoteCardProps } from "@/types/notes";
 
 
@@ -28,7 +28,6 @@ export default function NotesFilter({notes} : {notes: NoteCardProps[]}) {
     const matchedNotes = notes.filter((note) =>
       matchedLevels.some((level) => level.value === note.level)
     );
-    console.log(matchedNotes)
     setFilteredNotes(matchedNotes);
   };
 
@@ -41,7 +40,7 @@ export default function NotesFilter({notes} : {notes: NoteCardProps[]}) {
         placeholder="Select levels"
         variant="lightPurple"
         maxCount={3}
-        className="basic-multi-select min-w-xl"
+        className="basic-multi-select w-full"
       />
 
       <Notes notes={filteredNotes}/>

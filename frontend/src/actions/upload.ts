@@ -30,7 +30,6 @@ export async function addFilesToDB({ fileUrl, title, subject, level }: { fileUrl
                 level,
             }
         });
-        console.log(res);
         return { id: res.id, success: true };
     } catch (error) {
         throw new Error("Error adding file to database");
