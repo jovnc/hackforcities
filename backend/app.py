@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from helpers.preprocessing import vectorstore_ingest
+from helpers.preprocessing import answer_query, vectorstore_ingest
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
@@ -34,18 +34,27 @@ def upload_file():
             "message": "File processed successfully",
         }), 200
 
-# @app.route("/api/chat", methods=["POST"])
-# def chat_with_pdf():
-#     try:
-#         retriever = load_vectorstore("sss", "sss")
-#         llm = ChatOpenAI(model="gpt-4o")
-#         # system_prompt = question_prompt()
-#         qa_chain = RetrievalQA.from_chain_type(
-#             llm=ChatOpenAI("gpt-4o"),  # Use any supported LLM
-#             retriever=retriever,
-#         )
-#     except Exception as e:
-#         return jsonify({"error": str(e)}), 500
+@app.route("/api/chat", methods=["POST", "OPTIONS"])
+def chat_with_pdf():
+    if request.method == 'OPTIONS':
+        return jsonify({"message": "Options request received"}), 200
+
+    data = request.get_json()
+    id = data['id']
+    message = data['message']
+
+    if not id or not message:
+        return jsonify({"error": "Missing required fields"}), 400
+
+    try:
+        msg = answer_query(id, message)
+
+        return jsonify({
+            "message": msg,
+        }), 200
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(port=8000, debug=True)

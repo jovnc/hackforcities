@@ -58,6 +58,9 @@ export function UploadNoteForm({setOpen}: {setOpen: (open: boolean) => void}) {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
+      form.reset();
+      setOpen(false);;
+      toast("Your file will be uploaded in the background...");
       const {fileUrl, fileName, success: uploadSuccess } = await uploadFileToUT(values.file);
 
       if (!uploadSuccess) {
@@ -85,8 +88,6 @@ export function UploadNoteForm({setOpen}: {setOpen: (open: boolean) => void}) {
       });
 
       toast("File uploaded successfully");
-      form.reset();
-      setOpen(false);;
     } catch (error : any) {
       console.log("ERROR", error)
       toast(`Failed to upload file, please try again. Error: ${error.message}`);

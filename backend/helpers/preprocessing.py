@@ -2,15 +2,17 @@ from docling.document_converter import DocumentConverter
 
 from langchain.docstore.document import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-
-# from langchain.chains import RetrievalQA
 from langchain_community.vectorstores import Qdrant
-
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
-# from langchain_qdrant import QdrantVectorStore
+from langchain.chains import create_retrieval_chain
+from langchain.chains.combine_documents import create_stuff_documents_chain
+from langchain_core.prompts import ChatPromptTemplate
 
 from qdrant_client import QdrantClient
-from qdrant_client.models import VectorParams, Distance
+from qdrant_client.http.models import VectorParams, Distance
+from langchain_qdrant import QdrantVectorStore
+
+from helpers.prompts import custom_prompt
 
 import os 
 from dotenv import load_dotenv
@@ -66,21 +68,20 @@ def vectorstore_ingest(url, id):
 
     return vectorstore
 
-# def load_vectorstore(collection_name):
-#     return Qdrant.from_existing_collection(
-#         embedding=embeddings,
-#         client=qdrant_client,
-#         collection_name=collection_name,
-#         url=os.getenv("QDRANT_URL"),
-#         api_key=os.getenv("QDRANT_API_KEY"),
-#     )
+def load_vectorstore(collection_name):
+    vector_store = QdrantVectorStore(
+        client=qdrant_client,
+        collection_name=collection_name,
+        embedding=embeddings,
+    )
+    return vector_store
 
-# def setup_qa_chain(collection_name):
-#     retriever = load_vectorstore(collection_name)
-#     llm = ChatOpenAI(model="gpt-4o") 
-#     qa_chain = RetrievalQA.from_chain_type(
-#         llm=llm,
-#         retriever=retriever,
-#         return_source_documents=True
-#     )
-#     return qa_chain
+def answer_query(collection_name, query):
+    vectorstore = load_vectorstore(collection_name)
+    llm = ChatOpenAI(model="gpt-4o") 
+    
+    system_prompt = custom_prompt(vectorstore, query)
+    res = llm.invoke(system_prompt)
+    msg = res.content
+
+    return msg
