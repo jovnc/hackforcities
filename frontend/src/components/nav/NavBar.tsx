@@ -9,6 +9,7 @@ import { getRoleByUserId } from "@/actions/user";
 const navItems = [
   { href: "/", label: "Home" },
   { href: "/dashboard", label: "Dashboard" },
+  { href: "/notes", label: "Notes" },
 ];
 
 export async function Navbar({}) {
