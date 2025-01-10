@@ -2,9 +2,9 @@ import { Subject } from '@/types/notes';
 import React from 'react'
 
 const subjectToColor: Record<Subject, string> = {
-    English: 'bg-purple-300',
-    Math: 'bg-amber-300',
-    Science: 'bg-pink-300',
+    English: 'bg-purple-200',
+    Math: 'bg-amber-200',
+    Science: 'bg-pink-200',
   };
 
 const SubjectTag = ({ subject }: { subject: Subject}) => {
