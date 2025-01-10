@@ -2,16 +2,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { auth } from "@/auth";
 import { LoginModal } from "../auth/LoginModal";
-import LogoutButton from "../auth/LogoutButton";
-import { DarkModeToggle } from "../dark-mode/DarkModeToggle";
 import { ProfileMenu } from "./ProfileMenu";
+import NavLinks from "./NavLinks";
 
 const navItems = [
   { href: "/", label: "Home" },
   { href: "/dashboard", label: "Dashboard" },
-  { href: "/shop", label: "Buy / Sell" },
-  { href: "/donate", label: "Donate" },
-  { href: "/admin", label: "Admin" },
 ];
 
 export async function Navbar({}) {
@@ -27,7 +23,7 @@ export async function Navbar({}) {
             </Link>
           </div>
           <div className="flex flex-row items-center space-x-4">
-            <DarkModeToggle />
+            <NavLinks navItems={navItems} />
             {!session?.user && <LoginModal />}
             {session?.user && <ProfileMenu username={session?.user?.name as string} avatarUrl={session?.user?.image as string}/>}
           </div>

@@ -10,7 +10,7 @@ export default function Home() {
           <h1 className="text-4xl font-bold mb-4">
             Welcome to <p>SLSmart</p>
           </h1>
-          <p className="text-lg mb-4">
+          <p className="text-md mb-4 text-muted-foreground">
             Your ultimate solution for generating customized worksheets. Create,
             customize, and download worksheets tailored to your needs.
           </p>
