@@ -1,6 +1,8 @@
-import axios from "axios";
+import axios from 'axios';
+
+const backend_url = process.env.NEXT_PUBLIC_BACKEND_URL as string;
 
 export const api = axios.create({
-    baseURL: "http://127.0.0.1:8000/api",
-    timeout: 20000,
+  baseURL: `${backend_url || ''}/api`,
+  timeout: 20000,
 });
