@@ -28,7 +28,7 @@ export async function Navbar({}) {
           <div className="flex flex-row items-center space-x-4">
             <NavLinks navItems={navItems} />
             {!session?.user && <LoginModal />}
-            {session?.user && <ProfileMenu username={session?.user?.name as string} avatarUrl={session?.user?.image as string} role={role}/>}
+            {session?.user && <ProfileMenu id={session?.user?.id as string} username={session?.user?.name as string} avatarUrl={session?.user?.image as string} role={role}/>}
           </div>
         </div>
       </div>
