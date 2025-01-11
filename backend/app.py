@@ -5,6 +5,10 @@ from helpers.preprocessing import answer_query, vectorstore_ingest, generate_que
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
+@app.route('/', methods=['GET'])
+def home():
+    return "<h1>Flask backend</h1>"
+
 @app.route('/api/hello', methods=['GET'])
 def hello():
     return jsonify({'message': 'Hello from Flask backend!'})
@@ -101,4 +105,4 @@ def summary():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(port=8000, debug=True)
+    app.run(port=8000)
