@@ -35,9 +35,6 @@ While SLSmart offers promising solutions to enhance the learning experience, the
 3. **Language and Context Understanding:**  
    The AI may occasionally struggle with understanding complex queries or those written in informal language, which could affect its ability to provide accurate responses.
 
-4. **Ethical and Security Concerns:**  
-   Ensuring the security of sensitive educational data and preventing misuse of the platform’s features (e.g., students using it to bypass genuine effort) requires robust measures.
-
 ---
 
 ### Future Improvements
