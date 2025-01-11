@@ -20,3 +20,14 @@ def generate_question_custom_prompt(vector_store, query):
     """
     
     return augment_prompt
+
+def generate_summary_custom_prompt(vector_store, query):
+    results = vector_store.similarity_search(query, k=5)
+    source_knowledge = "\n".join([x.page_content for x in results])
+    augment_prompt = f"""You need to summarise the entire document in a concise manner, parts of the document is provided in the context.
+        You are to only ask questions based on the context provided.
+        Use three sentence maximum and keep the question concise.
+        Context: {source_knowledge}
+    """
+    
+    return augment_prompt

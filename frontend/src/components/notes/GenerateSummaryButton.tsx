@@ -13,7 +13,7 @@ export default function GenerateSummaryButton({ id }: { id: string }) {
   const handleClick = async () => {
     // AI-Generated Summary of Notes
     setOpen(true);
-    const res = await api.post('/chat', { message: 'what are these notes about?', id: id });
+    const res = await api.post('/summary', { message: 'generate summary of notes for me', id: id });
     const msg = res.data.message;
     setSummary(msg);
   };

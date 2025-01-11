@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from helpers.preprocessing import answer_query, vectorstore_ingest, generate_question
+from helpers.preprocessing import answer_query, vectorstore_ingest, generate_question, generate_summary
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
@@ -70,6 +70,28 @@ def generate_questions():
 
     try:
         msg = generate_question(id, message)
+
+        return jsonify({
+            "message": msg,
+        }), 200
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route("/api/summary", methods=["POST", "OPTIONS"])
+def summary():
+    if request.method == 'OPTIONS':
+        return jsonify({"message": "Options request received"}), 200
+
+    data = request.get_json()
+    id = data['id']
+    message = data['message']
+
+    if not id or not message:
+        return jsonify({"error": "Missing required fields"}), 400
+
+    try:
+        msg = generate_summary(id, message)
 
         return jsonify({
             "message": msg,
