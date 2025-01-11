@@ -10,7 +10,7 @@ from qdrant_client import QdrantClient
 from qdrant_client.http.models import VectorParams, Distance
 from langchain_qdrant import QdrantVectorStore
 
-from helpers.prompts import custom_prompt
+from helpers.prompts import custom_prompt, generate_question_custom_prompt
 
 import os 
 from dotenv import load_dotenv
@@ -98,11 +98,11 @@ def answer_query(collection_name, query):
 
     return msg
 
-def generate_worksheet(collection_name, query):
+def generate_question(collection_name, query):
     vectorstore = load_vectorstore(collection_name)
     llm = ChatOpenAI(model="gpt-4o") 
     
-    system_prompt = custom_prompt(vectorstore, query)
+    system_prompt = generate_question_custom_prompt(vectorstore, query)
     prompt = ChatPromptTemplate.from_messages(
         [
             (

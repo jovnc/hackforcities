@@ -16,9 +16,8 @@ export default function GenerateQuestionsButton({ id }: { id: string }) {
     // AI-Generated Summary of Notes
     setOpen(true);
     try {
-      const res = await api.post('/chat', {
-        message:
-          'help me generate 5 MCQ questions, provide answers too. only include questions and answers from the text',
+      const res = await api.post('/generate', {
+        message: 'help me generate 5 MCQ, provide answers too.',
         id: id,
       });
       setSummary(res.data.message);
