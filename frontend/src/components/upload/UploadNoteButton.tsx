@@ -11,11 +11,12 @@ import {
 } from "@/components/ui/dialog"
 import { UploadNoteForm } from './UploadNoteForm'
 
-export default function UploadNoteButton() {
+export default function UploadNoteButton({role}: {role: string}) {
   const [open, setOpen] = useState(false);
+  const isAllowed = role === 'Teacher';
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
+      <DialogTrigger asChild disabled={!isAllowed}>
         <Button variant="outline">Upload Notes</Button>
       </DialogTrigger>
       <DialogContent className="w-3/4">

@@ -5,6 +5,7 @@ import { SessionProvider } from "next-auth/react";
 import { Navbar } from "@/components/nav/NavBar";
 import { ThemeProvider } from "@/components/dark-mode/ThemeProvider";
 import { Toaster } from "@/components/ui/sonner";
+import Footer from "@/components/nav/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,9 +39,12 @@ export default function RootLayout({
             disableTransitionOnChange
           >
         <SessionProvider>
-          <Navbar />
-          {children}
-          <Toaster />
+        <div className="flex min-h-screen flex-col">
+            <Navbar />
+            <main className="flex-grow">{children}</main>
+            <Toaster />
+            <Footer />
+          </div>
         </SessionProvider>
         </ThemeProvider>
       </body>

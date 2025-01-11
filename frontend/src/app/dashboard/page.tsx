@@ -14,7 +14,7 @@ export default async function page() {
   return (
     <DashboardShell>
       <DashboardHeader heading="Dashboard" text="Welcome to your SLS eLearning dashboard.">
-        <UploadNoteButton />
+        <UploadNoteButton role={role}/>
       </DashboardHeader>
     <WelcomeCard name={name} role={role} />
     </DashboardShell>

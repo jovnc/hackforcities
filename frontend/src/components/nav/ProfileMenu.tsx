@@ -11,14 +11,16 @@ import {
 } from "@/components/ui/dropdown-menu";
 import LogoutButton from "../auth/LogoutButton";
 import { Separator } from "../ui/separator";
+import ChangeRoleButton from "./ChangeRoleButton";
 
 interface ProfileMenuProps {
+  id: string;
   username: string;
   avatarUrl: string;
   role: string;
 }
 
-export function ProfileMenu({ username, avatarUrl, role }: ProfileMenuProps) {
+export function ProfileMenu({ id, username, avatarUrl, role }: ProfileMenuProps) {
   const [isOpen, setIsOpen] = React.useState(false);
   const [hydrated, setHydrated] = React.useState(false);
 
@@ -50,7 +52,7 @@ export function ProfileMenu({ username, avatarUrl, role }: ProfileMenuProps) {
           className="hover:cursor-pointer"
           onSelect={(e: any) => e.preventDefault()}
         >
-          Test
+          <ChangeRoleButton userId={id} role={role}/>
         </DropdownMenuItem>
 
 

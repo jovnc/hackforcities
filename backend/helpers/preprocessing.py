@@ -97,3 +97,26 @@ def answer_query(collection_name, query):
     msg = res.content
 
     return msg
+
+def generate_worksheet(collection_name, query):
+    vectorstore = load_vectorstore(collection_name)
+    llm = ChatOpenAI(model="gpt-4o") 
+    
+    system_prompt = custom_prompt(vectorstore, query)
+    prompt = ChatPromptTemplate.from_messages(
+        [
+            (
+                "system",
+                system_prompt,
+            ),
+            ("human", "{input}"),
+        ]
+    )
+    chain = prompt | llm
+
+    res = chain.invoke({
+        "input": query,
+    })
+    msg = res.content
+
+    return msg
