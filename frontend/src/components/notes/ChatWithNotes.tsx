@@ -1,64 +1,64 @@
-"use client";
-import { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { Send } from 'lucide-react'
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form"
+'use client';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Send } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { api } from '@/lib/axios';
 import { Separator } from '../ui/separator';
 import { toast } from 'sonner';
 
 type Message = {
-  id: string
-  role: 'user' | 'bot'
-  content: string
-}
+  id: string;
+  role: 'user' | 'bot';
+  content: string;
+};
 
-export default function ChatWithNotes({ id }: {id: string}) {
-  const [messages, setMessages] = useState<Message[]>([])
-  const [isLoading, setIsLoading] = useState(false)
+export default function ChatWithNotes({ id }: { id: string }) {
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<{ message: string }>({
     defaultValues: {
       message: '',
     },
-  })
+  });
 
   const onSubmit = async (data: { message: string }) => {
-    if (data.message.trim() === '') return
+    if (data.message.trim() === '') return;
 
     const newUserMessage: Message = {
       id: Date.now().toString(),
       role: 'user',
       content: data.message,
-    }
+    };
 
-    setMessages((prevMessages) => [...prevMessages, newUserMessage])
-    setIsLoading(true)
-    form.reset()
+    setMessages((prevMessages) => [...prevMessages, newUserMessage]);
+    setIsLoading(true);
+    form.reset();
 
     try {
-      const response = await api.post('/chat', { message: data.message, id: id })
+      const response = await api.post('/chat', { message: data.message, id: id });
       const newBotMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'bot',
         content: response.data.message,
-      }
-      setMessages((prevMessages) => [...prevMessages, newBotMessage])
+      };
+      setMessages((prevMessages) => [...prevMessages, newBotMessage]);
     } catch (error) {
-      toast('An error occurred while sending the message')
+      toast('An error occurred while sending the message');
       // Handle error (e.g., show an error message to the user)
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
-    <Card className="w-full max-w-2xl mx-auto h-[600px]">
+    <Card className="mx-auto h-[600px] w-full max-w-2xl">
       <CardHeader>
         <CardTitle>Chat with the Notes</CardTitle>
       </CardHeader>
@@ -66,9 +66,14 @@ export default function ChatWithNotes({ id }: {id: string}) {
       <CardContent>
         <ScrollArea className="h-[450px] px-4 py-8">
           {messages.map((m) => (
-            <div key={m.id} className={`flex items-start mb-4 ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`flex ${m.role === 'user' ? 'flex-row-reverse' : 'flex-row'} items-start`}>
-                <Avatar className="w-8 h-8">
+            <div
+              key={m.id}
+              className={`mb-4 flex items-start ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}
+            >
+              <div
+                className={`flex ${m.role === 'user' ? 'flex-row-reverse' : 'flex-row'} items-start`}
+              >
+                <Avatar className="h-8 w-8">
                   {m.role === 'user' ? (
                     <>
                       <AvatarImage src="/placeholder-user.jpg" alt="User" />
@@ -81,21 +86,21 @@ export default function ChatWithNotes({ id }: {id: string}) {
                     </>
                   )}
                 </Avatar>
-                <div className={`mx-2 p-3 rounded-lg ${m.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted'}`}>
+                <div
+                  className={`mx-2 rounded-lg p-3 ${m.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted'}`}
+                >
                   {m.content}
                 </div>
               </div>
             </div>
           ))}
           {isLoading && (
-            <div className="flex items-start mb-4">
-              <Avatar className="w-8 h-8">
+            <div className="mb-4 flex items-start">
+              <Avatar className="h-8 w-8">
                 <AvatarImage src="/placeholder-bot.jpg" alt="Bot" />
                 <AvatarFallback>B</AvatarFallback>
               </Avatar>
-              <div className="mx-2 p-3 rounded-lg bg-muted">
-                Bot is typing...
-              </div>
+              <div className="mx-2 rounded-lg bg-muted p-3">Bot is typing...</div>
             </div>
           )}
         </ScrollArea>
@@ -109,10 +114,7 @@ export default function ChatWithNotes({ id }: {id: string}) {
               render={({ field }) => (
                 <FormItem className="flex-grow">
                   <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="Ask your questions..."
-                    />
+                    <Input {...field} placeholder="Ask your questions..." />
                   </FormControl>
                 </FormItem>
               )}
@@ -124,6 +126,5 @@ export default function ChatWithNotes({ id }: {id: string}) {
         </Form>
       </CardFooter>
     </Card>
-  )
-  }
-  
+  );
+}
