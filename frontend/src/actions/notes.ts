@@ -30,18 +30,26 @@ export async function getRecentNotes() {
         orderBy: {
           createdAt: "desc", // Adjust this to the appropriate timestamp field in your database
         },
-        take: 3, // Limit to 3 results
+        take: 5, // Limit to 5 results
       });
-      console.log("Recent Notes:", res);
+    
       return res.map((note) => ({
         ...note,
         level: note.level as Level, // Explicit cast to Level
         subject: note.subject as Subject,
       }));
-      return res;
     } catch (error) {
       console.error("Error fetching recent notes", error);
       return [];
     }
   }
 
+  export async function getNotesCount() {
+    try {
+        const count = await db.notes.count();
+        return count;
+    } catch (error) {
+        console.error("Error fetching notes count", error);
+        return 0; // Return 0 if an error occurs
+    }
+}

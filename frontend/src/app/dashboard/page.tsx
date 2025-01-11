@@ -6,6 +6,7 @@ import UploadNoteButton from '@/components/upload/UploadNoteButton'
 import { WelcomeCard } from '@/components/dashboard/WelcomeCard'
 import { Button } from '@/components/ui/button'
 import React from 'react'
+import RecentNotes from '@/components/dashboard/RecentNotes'
 
 export default async function page() {
     const session = await auth();
@@ -17,6 +18,7 @@ export default async function page() {
         <UploadNoteButton role={role}/>
       </DashboardHeader>
     <WelcomeCard name={name} role={role} />
+    <RecentNotes />
     </DashboardShell>
   )
 }

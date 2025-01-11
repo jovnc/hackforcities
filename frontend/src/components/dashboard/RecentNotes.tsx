@@ -1,13 +1,22 @@
 import React from 'react'
 import { NoteCard } from '../notes/NotesCard'
 import { Level, NoteCardProps, Subject } from '@/types/notes';
-import { getRecentNotes } from '@/actions/notes';
+import { getNotesCount, getRecentNotes } from '@/actions/notes';
 import { Button } from '../ui/button';
-import { Link } from 'lucide-react';
+import Link from 'next/link';
 
 const RecentNotes = async () => {
     const recentNotes = await getRecentNotes();
-    console.log("hyii")
+    const notesCount = await getNotesCount();
+    if (!recentNotes || recentNotes.length === 0) {
+        return (
+            <div className='pt-8'>
+                <h2 className="text-2xl font-bold mb-4">Recently Uploaded Notes</h2>
+                <p className="text-gray-500 font-semibold">No notes found. Please wait for a teacher to upload them.</p>
+            </div>
+        )
+    }
+
   return (
     <div>
       <div className="mt-8">
@@ -26,8 +35,8 @@ const RecentNotes = async () => {
                     ))}
                 </div>
                 <div className="mt-4">
-                    <Button asChild>
-                        <Link href="/notes">View All Notes</Link>
+                    <Button variant={"outline"}>
+                        <Link href="/notes">View All Notes ({notesCount})</Link>
                     </Button>
                 </div>
             </div>
