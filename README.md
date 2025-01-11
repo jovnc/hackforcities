@@ -8,7 +8,7 @@ SMU HackForCities 2025
 
 SLSmart is an innovative solution designed to enhance the Singapore Learning System (SLS) ePortal by integrating Generative AI technologies. The platform addresses two critical issues faced by students and teachers: lack of student engagement and user experience challenges. By leveraging Retrieval-Augmented Generation (RAG) and AI-powered tools, SLSmart provides a personalized, interactive, and seamless learning experience.
 
-Link to our app: https://hackforcities.vercel.app/ (backend is still deploying)
+Link to our app: https://hackforcities.vercel.app/ (backend may be slow due to free hosted compute limitations)
 
 ### Key Features
 
