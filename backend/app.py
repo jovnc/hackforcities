@@ -13,6 +13,7 @@ def home():
 def hello():
     return jsonify({'message': 'Hello from Flask backend!'})
 
+# Upload file to the system
 @app.route('/api/upload', methods=['POST', 'OPTIONS'])
 def upload_file():
 
@@ -38,6 +39,7 @@ def upload_file():
             "message": "File processed successfully",
         }), 200
 
+# Chat with the pdf
 @app.route("/api/chat", methods=["POST", "OPTIONS"])
 def chat_with_pdf():
     if request.method == 'OPTIONS':
@@ -60,6 +62,7 @@ def chat_with_pdf():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+# Generate questions from the pdf
 @app.route("/api/generate", methods=["POST", "OPTIONS"])
 def generate_questions():
     if request.method == 'OPTIONS':
@@ -67,13 +70,14 @@ def generate_questions():
 
     data = request.get_json()
     id = data['id']
-    message = data['message']
+    title = data['title']
+    level = data['level']
 
-    if not id or not message:
+    if not id or not title or not level:
         return jsonify({"error": "Missing required fields"}), 400
 
     try:
-        msg = generate_question(id, message)
+        msg = generate_question(id, title, level)
 
         return jsonify({
             "message": msg,
@@ -82,6 +86,7 @@ def generate_questions():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+# Generate summary from the pdf
 @app.route("/api/summary", methods=["POST", "OPTIONS"])
 def summary():
     if request.method == 'OPTIONS':
@@ -89,13 +94,14 @@ def summary():
 
     data = request.get_json()
     id = data['id']
-    message = data['message']
+    title = data['title']
+    level = data['level']
 
-    if not id or not message:
+    if not id or not title or not level:
         return jsonify({"error": "Missing required fields"}), 400
 
     try:
-        msg = generate_summary(id, message)
+        msg = generate_summary(id, title, level)
 
         return jsonify({
             "message": msg,
@@ -105,4 +111,4 @@ def summary():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(port=8000)
+    app.run(port=8000, debug=True)

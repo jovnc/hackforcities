@@ -5,17 +5,34 @@ import { Button } from '../ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../ui/dialog';
 import Spinner from '../ui/spinner';
 import { api } from '@/lib/axios';
+import { toast } from 'sonner';
 
-export default function GenerateSummaryButton({ id }: { id: string }) {
+export default function GenerateSummaryButton({
+  id,
+  title,
+  level,
+}: {
+  id: string;
+  title: string;
+  level: string;
+}) {
   const [open, setOpen] = React.useState(false);
   const [summary, setSummary] = React.useState(null);
 
   const handleClick = async () => {
     // AI-Generated Summary of Notes
     setOpen(true);
-    const res = await api.post('/summary', { message: 'generate summary of notes for me', id: id });
-    const msg = res.data.message;
-    setSummary(msg);
+    try {
+      const res = await api.post('/summary', {
+        id: id,
+        title: title,
+        level: level,
+      });
+      const msg = res.data.message;
+      setSummary(msg);
+    } catch (error) {
+      toast("Couldn't generate summary, document may still be processing");
+    }
   };
 
   return (
@@ -26,7 +43,13 @@ export default function GenerateSummaryButton({ id }: { id: string }) {
       <DialogContent className="w-3/4">
         <DialogTitle></DialogTitle>
         <DialogHeader className="font-bold">Summary</DialogHeader>
-        {summary ? <p>{summary}</p> : <Spinner />}
+        {summary ? (
+          <p className="text-sm">{summary}</p>
+        ) : (
+          <div className="flex w-full items-center justify-center">
+            <Spinner />
+          </div>
+        )}
       </DialogContent>
     </Dialog>
   );

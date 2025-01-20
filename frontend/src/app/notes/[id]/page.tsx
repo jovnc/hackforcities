@@ -1,7 +1,7 @@
 import { getNoteById } from '@/actions/notes';
 import ChatWithNotes from '@/components/notes/ChatWithNotes';
-import GenerateQuestionsButton from '@/components/notes/GenerateQuestionsButton';
-import GenerateSummaryButton from '@/components/notes/GenerateSummaryButton';
+import GenerateQuestionsButton from '@/components/quiz/GenerateQuestionsButton';
+import GenerateSummaryButton from '@/components/summary/GenerateSummaryButton';
 import LevelTag from '@/components/notes/LevelTag';
 import PDFViewer from '@/components/notes/PDFViewer';
 import SubjectTag from '@/components/notes/SubjectTag';
@@ -40,8 +40,8 @@ export default async function NotePage({ params }: { params: Promise<{ id: strin
       </div>
 
       <div className="flex items-center justify-center gap-4 p-4">
-        <GenerateSummaryButton id={note.id} />
-        <GenerateQuestionsButton id={note.id} />
+        <GenerateSummaryButton id={note.id} title={note.title} level={note.level} />
+        <GenerateQuestionsButton id={note.id} title={note.title} level={note.level} />
       </div>
 
       <div className="grid w-full grid-cols-1 gap-4 bg-primary-foreground p-4 md:grid-cols-2">

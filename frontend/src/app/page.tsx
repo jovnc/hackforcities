@@ -1,11 +1,14 @@
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import FeaturesSection from '@/components/home/FeaturesSection';
+import HowItWorksSection from '@/components/home/HowItWorksSection';
+import CTASection from '@/components/home/CTASection';
 
 export default function Home() {
   return (
-    <div className="flex h-full flex-col bg-primary/5">
-      <div className="grid items-center justify-between p-8 md:grid-cols-2">
+    <div className="mx-auto flex h-full flex-col gap-8">
+      <div className="flex flex-row items-center justify-between bg-primary/5 px-20 py-10">
         <div className="text-center md:text-start">
           <h1 className="mb-4 text-4xl font-bold">
             Welcome to <p>SLSmart</p>
@@ -18,16 +21,19 @@ export default function Home() {
             <Link href="/dashboard">Begin your journey</Link>
           </Button>
         </div>
-        <div className="xs:p-16 w-full px-32 py-16 md:p-16 xl:p-32">
+        <div className="flex w-full items-center justify-center">
           <Image
             src="/logo.png"
             alt="WorksheetGen Logo"
             width={400}
             height={400}
-            className="flex w-full items-center justify-center"
+            className="flex items-center justify-center"
           />
         </div>
       </div>
+      <FeaturesSection />
+      <HowItWorksSection />
+      <CTASection />
     </div>
   );
 }
