@@ -10,6 +10,7 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog';
 import { Quiz } from '@/types/quiz';
+import Feedback from '../feedback/Feedback';
 
 export function MCQQuizDialog({
   quizQuestions,
@@ -85,10 +86,13 @@ export function MCQQuizDialog({
               ))}
             </div>
             {showAnswer && selectedAnswer !== quizQuestions[currentQuestion].answer && (
-              <p className="mt-4 text-sm text-red-500">
-                Correct answer:{' '}
-                {quizQuestions[currentQuestion].choices[quizQuestions[currentQuestion].answer]}
-              </p>
+              <div className="flex flex-col gap-4">
+                <p className="mt-4 text-sm text-red-500">
+                  Correct answer:{' '}
+                  {quizQuestions[currentQuestion].choices[quizQuestions[currentQuestion].answer]}
+                </p>
+                <Feedback />
+              </div>
             )}
           </div>
         ) : (

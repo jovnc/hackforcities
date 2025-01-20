@@ -6,6 +6,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../ui/dialog';
 import Spinner from '../ui/spinner';
 import { api } from '@/lib/axios';
 import { toast } from 'sonner';
+import SummaryComponent from './SummaryComponent';
 
 export default function GenerateSummaryButton({
   id,
@@ -44,7 +45,7 @@ export default function GenerateSummaryButton({
         <DialogTitle></DialogTitle>
         <DialogHeader className="font-bold">Summary</DialogHeader>
         {summary ? (
-          <p className="text-sm">{summary}</p>
+          <SummaryComponent summary={summary} />
         ) : (
           <div className="flex w-full items-center justify-center">
             <Spinner />
